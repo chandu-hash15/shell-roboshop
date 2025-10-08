@@ -82,6 +82,9 @@ validate $? "copying mongo.repo file"
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 validate $? "mongodb-mongosh"
 
+sed -i s'/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+validate $? "allowing remote connections"
+
 mongosh --host $MONGODB_HOST </app/db/master-data.js
 validate $? "loading catalogue schema"
 
