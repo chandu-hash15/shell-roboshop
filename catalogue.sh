@@ -16,14 +16,14 @@ else
     echo -e "you are root user $G success $N"
 fi
 
-validat() [
-    if [ $1 -ne 0 ]; then
-        echo -e "$2 ------- $R failed $N"
-        exit 1
-    else
-        echo -e "$2 ------- $G success $N"
-    fi 
-]
+validat() {
+ if [ $1 -ne 0 ];then
+     echo -e "$2 ------- $R failed $N"
+     exit 1
+ else
+    echo -e "$2 ------- $G success $N"
+ fi 
+}
 
 ##### Nodejs installation #####
 dnf module disable nodejs -y &>>$LOG_FILE
