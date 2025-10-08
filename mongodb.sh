@@ -19,7 +19,7 @@ else
 fi
 
 validate() {
-if [ $1 -ne 0 ],then
+if [ $1 -ne 0 ];then
     echo -e "$2 ----- failed $R failed $N"
     exit 1
 else  
