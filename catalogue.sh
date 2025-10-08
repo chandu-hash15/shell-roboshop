@@ -9,7 +9,7 @@ SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 mkdir -p "$LOG_FOLDER"
 SCRIPT_DIR=$(pwd)
-MONGODB_HOST=mongodb.mitha.fun
+MONGODB_HOST=mongodb.mitha.funs
 USER_ID=$(id -u)
 if [ $USER_ID -ne 0 ]; then
     echo -e "you are not a roor user $R failed $N"
@@ -82,9 +82,6 @@ validate $? "copying mongo.repo file"
 
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 validate $? "mongodb-mongosh"
-
-sed -i s'/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
-validate $? "allowing remote connections"
 
 mongosh --host $MONGODB_HOST </app/db/master-data.js
 validate $? "loading catalogue schema"
