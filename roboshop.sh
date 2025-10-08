@@ -1,7 +1,7 @@
 #!/bin/bash
 
 AMI_ID="ami-09c813fb71547fc4f"
-SG_ID="sg-0a2728062dcacf005"
+SG_ID="sg - sg-05f323a81d59459e1"
 ZONE_ID="Z00484781U0O1QG6VX0D8"
 Domain_Name="mitha.fun"
 for instance in $@ # mongodb redis mysql
