@@ -6,7 +6,7 @@ Y="\e[33m"
 N="\e[0m"
 USER_ID=$(id -u)
 LOG_FOLDER="/var/log/shell_roboshop"
-SCRIPT_NAME=$"(echo $0 | cut -d "." =f1)"
+SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 
 mkdir -p $LOG_FOLDER
@@ -22,7 +22,6 @@ validate() {
 if [ $1 -ne 0 ],then
     echo -e "$2 ----- failed $R failed $N"
     exit 1
-
 else  
     echo -e " $2 ----- $G success $N"
 fi
@@ -30,7 +29,7 @@ fi
 }
 
 
-folder=$(vim /etc/yum.repos.d/mongo.repo)
+folder= "/etc/yum.repos.d/mongo.repo"
 
 cp mongo.repo $folder
 validate $? "copying mongo.repo file"
