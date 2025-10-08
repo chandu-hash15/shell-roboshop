@@ -29,7 +29,7 @@ fi
 }
 
 
-folder= "/etc/yum.repos.d/mongo.repo"
+folder= "/etc/yum.repos.d/mongo.repo/"
 
 cp mongo.repo "$folder"
 validate $? "copying mongo.repo file"
