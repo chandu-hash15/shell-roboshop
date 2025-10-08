@@ -8,6 +8,7 @@ LOG_FOLDER="/var/log/sheel_catalogue"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 mkdir -p "$LOG_FOLDER"
+SCRIPT_DIR=$(pwd)
 USER_ID=$(id -u)
 if [ $USER_ID -ne 0 ]; then
     echo -e "you are not a roor user $R failed $N"
@@ -43,7 +44,7 @@ else
   echo -e "roboshop user already exists ------- $G success $N"
 fi
 
-mkdir /app 
+mkdir -p /app 
 validate $? "creating app directory" 
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
@@ -52,13 +53,16 @@ validate $? "downloading catalogue component"
 cd /app
 validate $? "changing directory to /app"
 
+rm -rf  /app/*
+validate $? "removing existing code"
+
 unzip /tmp/catalogue.zip
 validate $? "unzipping catalogue component"
 
 npm install &>>$LOG_FILE
 validate $? "installing nodejs dependencies"
 
-cp catalogue.service /etc/systemd/system/catalogue.service
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 validate $? "copying catalogue service file"
 
 
@@ -72,7 +76,7 @@ systemctl start catalogue &>>$LOG_FILE
 validate $? "starting catalogue service"
 
 
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 validate $? "copying mongo.repo file"   
 
 dnf install mongodb-mongosh -y &>>$LOG_FILE
