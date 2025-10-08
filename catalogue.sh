@@ -4,7 +4,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-LOG_FOLDER="var/log/sheel_catalogue"
+LOG_FOLDER="/var/log/sheel_catalogue"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 mkdir -p "$LOG_FOLDER"
@@ -35,7 +35,7 @@ validate $? "enabling nodejs"
 dnf install nodejs -y &>>$LOG_FILE
 validate $? "nodejs"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop1 system user" roboshop &>>$LOG_FILE
+useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
 validate $? "adding roboshop user"
 
 mkdir /app 
