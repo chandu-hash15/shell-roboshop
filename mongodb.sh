@@ -24,7 +24,7 @@ if [ $1 -ne 0 ],then
     exit 1
 
 else  
-   echo -e " $2 ----- $G success $N"
+    echo -e " $2 ----- $G success $N"
 fi
 
 }
