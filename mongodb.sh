@@ -27,11 +27,7 @@ else
 fi
 
 }
-
-
-folder= "/etc/yum.repos.d/mongo.repo/"
-
-cp mongo.repo "$folder"
+cp mongo.repo /etc/yum.repos.d/mongo.repo 
 validate $? "copying mongo.repo file"
 
 dnf list installed mongodb-org &>> $LOG_FILE
