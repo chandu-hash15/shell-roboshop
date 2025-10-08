@@ -9,7 +9,7 @@ LOG_FOLDER="/var/log/shell_roboshop"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 
-mkdir -p $LOG_FOLDER
+mkdir -p "$LOG_FOLDER"
 
 if [ $USER_ID -ne 0 ];then
     echo " you are not a root user "
@@ -31,7 +31,7 @@ fi
 
 folder= "/etc/yum.repos.d/mongo.repo"
 
-cp mongo.repo $folder
+cp mongo.repo "$folder"
 validate $? "copying mongo.repo file"
 
 dnf list installed mongodb-org &>> $LOG_FILE
