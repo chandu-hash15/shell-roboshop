@@ -9,7 +9,7 @@ SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 mkdir -p "$LOG_FOLDER"
 SCRIPT_DIR=$(pwd)
-MONGODB_HOST=mongodb.mitha.funs
+MONGODB_HOST=mongodb.mitha.fun
 USER_ID=$(id -u)
 if [ $USER_ID -ne 0 ]; then
     echo -e "you are not a roor user $R failed $N"
