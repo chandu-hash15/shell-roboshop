@@ -12,7 +12,8 @@ SCRIPT_DIR=$PWD
 MONGODB_HOST=mongodb.mitha.fun 
 
 USER_ID=$(id -u)
-if [ $USER_ID -ne 0 ]; thenecho -e " you are not a root user "
+if [ $USER_ID -ne 0 ]; then
+    echo -e " you are not a root user "
     exit 1
 else
     echo "you are root user"
