@@ -9,7 +9,7 @@ LOG_FOLDER="/var/log/shell_script"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 SCRIPT_DIR=$PWD
-MONGODB_HOST=mongodb.mitha.fun 
+MONGODB_HOST=mongo.mitha.fun 
 
 USER_ID=$(id -u)
 if [ $USER_ID -ne 0 ]; then
