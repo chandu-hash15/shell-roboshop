@@ -84,5 +84,5 @@ cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo &>>$LOG_FILE
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 validate $? "Install MongoDB client"
 
-mongosh --host MONGODB-SERVER-IPADDRESS </app/db/master-data.js &>>$LOG_FILE
+mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
 validate $? "Load catalogue products"       
