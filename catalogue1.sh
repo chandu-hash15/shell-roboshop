@@ -11,7 +11,7 @@ LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 SCRIPT_DIR=$PWD
 MONGODB_HOST=mongo.mitha.fun 
 
-trap 'echo "There is an error in $LINENO, Command: $BASH_COMMAND"' ERRs
+trap 'echo "There is an error in $LINENO, Command: $BASH_COMMAND"' ERR
 
 USER_ID=$(id -u)
 if [ $USER_ID -ne 0 ]; then
