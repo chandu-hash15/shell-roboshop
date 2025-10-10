@@ -49,5 +49,5 @@ validate $? "disabling protected mode"
 systemctl enable redis &>>$LOG_FILE
 validate $? "enabling redis"
 
-sytemctl start reddis &>>$LOG_FILE
+systemctl start redis &>>$LOG_FILE
 validate $? "starting redis"
