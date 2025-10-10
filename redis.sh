@@ -1,4 +1,4 @@
-#1/bin/bash/
+#!/bin/bash/
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
@@ -8,8 +8,6 @@ LOG_FOLDER="/var/log/shell_script"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
 DEST_PATH="/etc/redis/redis.conf"
-
-PATH="/etc/redis/redis.conf
 
 mkdir -p $LOG_FOLDER
 
@@ -31,19 +29,19 @@ validate() {
 }
 
 dnf module disable redis -y &>>$LOG_FILE
-validate $? "disabling reddis"
+validate $? "disabling redis"
 
 dnf module enable redis:7 -y &>>LOG_FILE
-validate $? "enabling reddis"
+validate $? "enabling redis"
 
 dnf install redis -y &>>$LOG_FILE
 validate $? "redis"
 
 
-sed -i /127.0.0.1/0.0.0.0/ $DEST_PATH
+sed -i 's/127.0.0.1/0.0.0.0/' "$DEST_PATH"
 validate $? "allowing remote connections"
 
-sed -i /protected-mode yes/protected-mode no/ $DEST_PATH
+sed -i 's/protected-mode yes/protected-mode no/' "$DEST_PATH"
 validate $? "disabling protected mode"
 
 systemctl enable redis &>>$LOG_FILE
