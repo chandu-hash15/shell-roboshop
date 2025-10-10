@@ -50,4 +50,4 @@ systemctl enable redis &>>$LOG_FILE
 validate $? "enabling redis"
 
 sytemctl start reddis &>>$LOG_FILE
-validate $? "starting redis"    
+validate $? "starting redis"
