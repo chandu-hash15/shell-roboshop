@@ -1,66 +1,52 @@
 #!/bin/bash
-R="/e[31m"
-G="/e[32m"
-Y="/e[33m"
-N="/e[0m"
-LOG_FOLDER="/var/Log/shell_roboshop"
-SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
+
+USERID=$(id -u)
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+
+LOGS_FOLDER="/var/log/shell-roboshop"
+SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 SCRIPT_DIR=$PWD
+MONGODB_HOST=mongodb.daws86s.fun
+LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" # /var/log/shell-script/16-logs.log
 
-USER_ID=$(id -u)
-if [ $USER_ID -ne 0 ];then
-    echo " you are not a root user "
-    exit 1
-else
-    echo " you are root user "
-fi  
+mkdir -p $LOGS_FOLDER
+echo "Script started executed at: $(date)" | tee -a $LOG_FILE
 
-mkdir -p "$LOG_FOLDER"
+if [ $USERID -ne 0 ]; then
+    echo "ERROR:: Please run this script with root privelege"
+    exit 1 # failure is other than 0
+fi
 
-
-validate() {
-    if [ $1 -ne 0 ];then
-        echo -e "$2 ----- failed $R failed $N"
+VALIDATE(){ # functions receive inputs through args just like shell script args
+    if [ $1 -ne 0 ]; then
+        echo -e "$2 ... $R FAILURE $N" | tee -a $LOG_FILE
         exit 1
     else
-        echo -e " $2 ----- $G success $N"
+        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOG_FILE
     fi
 }
 
-
-dnf module list nginx -y &>>$LOG_FILE
-validate $? "nginx module list"
-
 dnf module disable nginx -y &>>$LOG_FILE
-validate $? "disabling nginx module"
-
 dnf module enable nginx:1.24 -y &>>$LOG_FILE
-validate $? "enabling nginx 1.24 module"
-
 dnf install nginx -y &>>$LOG_FILE
-validate $? "nginx installation"
+VALIDATE $? "Installing Nginx"
 
-systemctl enable nginx &>>$LOG_FILE
-validate $? "enabling nginx"
+systemctl enable nginx  &>>$LOG_FILE
+systemctl start nginx 
+VALIDATE $? "Starting Nginx"
 
-systemctl start nginx
-validate $? "starting nginx"
-
-rm -rf /usr/share/nginx/html/* &>>$LOG_FILE
-validate $? "removing default content"
-
+rm -rf /usr/share/nginx/html/* 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOG_FILE
-validate $? "downloading frontend content"
-
-cd /usr/share/nginx/html
+cd /usr/share/nginx/html 
 unzip /tmp/frontend.zip &>>$LOG_FILE
+VALIDATE $? "Downloading frontend"
 
-validate $? "extracting frontend content"
-
+rm -rf /etc/nginx/nginx.conf
 cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf
-validate $? "copying nginx configuration file" 
+VALIDATE $? "Copying nginx.conf"
 
-systemctl restart nginx
-validate $? "restarting nginx"
-
+systemctl restart nginx 
+VALIDATE $? "Restarting Nginx"
