@@ -6,7 +6,7 @@ N="/e[0m"
 LOG_FOLDER="/var/Log/shell_roboshop"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log"
-SCRIPT_DIR="pwd"
+SCRIPT_DIR=$PWD
 
 USER_ID=$(id -u)
 if [ $USER_ID -ne 0 ];then
@@ -58,7 +58,7 @@ unzip /tmp/frontend.zip &>>$LOG_FILE
 
 validate $? "extracting frontend content"
 
-cp "$SCRIPT_DIR nginx.conf" /etc/nginx/nginx.conf
+cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf
 validate $? "copying nginx configuration file" 
 
 systemctl restart nginx &>>$LOG_FILE
