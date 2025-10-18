@@ -61,6 +61,6 @@ validate $? "extracting frontend content"
 cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf
 validate $? "copying nginx configuration file" 
 
-systemctl restart nginx &>>$LOG_FILE
+systemctl restart nginx
 validate $? "restarting nginx"
 
